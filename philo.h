@@ -6,7 +6,7 @@
 /*   By: mde-maga <mde-maga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:12:19 by mde-maga          #+#    #+#             */
-/*   Updated: 2024/11/14 12:14:03 by mde-maga         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:14:37 by mde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,16 @@ typedef struct s_clean
 
 int		karen(int flag);
 int		error_syntax(char *str);
+
 int		main(int ac, char **av);
+
+int		ph_atoi(const char *str);
+void	init_threads(t_clean *philo);
+
+int		ft_strlen(char *str);
+void	ft_putnbr_fd(long int len, int fd);
+void	ft_putstr_fd(char *s, int fd);
+void	ft_putchar_fd(char c, int fd);
 
 
 
