@@ -6,7 +6,7 @@
 /*   By: mde-maga <mde-maga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 10:42:06 by mde-maga          #+#    #+#             */
-/*   Updated: 2024/11/18 12:25:47 by mde-maga         ###   ########.fr       */
+/*   Updated: 2024/11/21 12:42:17 by mde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	initialize(t_clean *p)
 	int	i;
 
 	i = 0;
-	p->arg.start_t = actual_time();
+	p->arg.start_t = time_of_day();
 	p->arg.enough = 0;
 	p->arg.n_finish = 0;
 	init_threads(p);
