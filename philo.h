@@ -6,7 +6,7 @@
 /*   By: mde-maga <mde-maga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:12:19 by mde-maga          #+#    #+#             */
-/*   Updated: 2024/11/14 14:14:37 by mde-maga         ###   ########.fr       */
+/*   Updated: 2024/11/18 12:20:38 by mde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,39 +21,39 @@
 # include <stdio.h>
 # include <stdbool.h>
 
-typedef struct	s_philo
-{
-	int						id;
-	int						enough;
-	long int				gluttony;
-	unsigned int			n_eat;
-	pthread_t				t_id;
-	pthread_t				t_rip_id;
-	pthread_mutex_t			*r_fork;
-	pthread_mutex_t			l_fork;
-	t_stats					*p;
-}							t_philo;
-
-typedef struct	s_stats
+typedef struct s_stats
 {
 	int						total;
-	int						rip;
-	int						eat;
+	int						rip; // die
+	int						gluttony; // eat
 	int						sleep;
-	int						last_meal;
-	int						n_finsh;
-	int						stop;
-	long int				start;
-	pthread_mutex_t			write;
-	pthread_mutex_t			death;
-	pthread_mutex_t			meal;
+	int						m_eat;
+	long int				start_t;
+	pthread_mutex_t			write; // write_mutex
+	pthread_mutex_t			killed; // dead
+	pthread_mutex_t			time_to_eat; // time_eat
 	pthread_mutex_t			finish;
+	int						n_finish; // nb_p_finish
+	int						enough; // stop
 }							t_stats;
+
+typedef struct s_philo
+{
+	int						id;
+	pthread_t				thread_id;
+	pthread_t				rip_id; // thread_death_id;
+	pthread_mutex_t			*r_fork;
+	pthread_mutex_t			l_fork;
+	t_stats					*pa;
+	long int				eat_it_up; // ms_eat
+	unsigned int			n_eat; // nb_eat
+	int						finish_please;
+}							t_philo;
 
 typedef struct s_clean
 {
-	t_philo					*philo;
-	t_stats					stats;
+	t_philo					*ph;
+	t_stats					arg; // a
 }							t_clean;
 
 
@@ -63,7 +63,9 @@ int		error_syntax(char *str);
 int		main(int ac, char **av);
 
 int		ph_atoi(const char *str);
-void	init_threads(t_clean *philo);
+void	init_threads(t_clean *p);
+int		numeric(char **argv, int i, int j);
+int		initialize(t_clean *p);
 
 int		ft_strlen(char *str);
 void	ft_putnbr_fd(long int len, int fd);

@@ -6,17 +6,16 @@
 #    By: mde-maga <mde-maga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/04 12:12:17 by mde-maga          #+#    #+#              #
-#    Updated: 2024/11/04 12:17:22 by mde-maga         ###   ########.fr        #
+#    Updated: 2024/11/18 12:23:05 by mde-maga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS	= main.c
-SRCS	+=
+SRCS	+= ft_utility.c ft_start.c ft_error.c
 OBJS	= $(SRCS:.c=.o)
 NAME	= philo
-CC	= clang
-CFLAGS	= -Wall -Wextra -Werror
-INCLUDE	= -lpthread
+CC		= clang
+CFLAGS	= -Werror -Wall -Wextra -g -I $(HEADER) -pthread
 HEADER	= philo.h
 
 # Bold High Intensity
@@ -37,8 +36,8 @@ HOWTO = @echo ${BIGreen}"To run the program write:"${BIWhite}"./${NAME} X X X X 
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) $(INCLUDE) $(OBJS) -o $(NAME)
+$(NAME): $(OBJS) $(HEADER)
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 	$(MSG1)
 	${HOWTO}
 
@@ -51,8 +50,5 @@ fclean: clean
 	$(MSG3)
 
 re: fclean all
-
-%.o: %.c $(HEADER)
-	$(CLANG) $(FLAGS) -c $<  -o $(<:.c=.o)
 
 .PHONY: clean fclean all re
