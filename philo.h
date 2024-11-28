@@ -6,7 +6,7 @@
 /*   By: mde-maga <mde-maga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:12:19 by mde-maga          #+#    #+#             */
-/*   Updated: 2024/11/21 13:10:58 by mde-maga         ###   ########.fr       */
+/*   Updated: 2024/11/28 12:41:18 by mde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,8 @@ int			check_death(t_philo *ph, int i);
 long int	time_of_day(void);
 void		ft_usleep(long int time_in_ms);
 
+int			threading(t_clean *p);
+void		*thread(void *data);
+void		*is_it_dead(void *data);
 
 #endif
