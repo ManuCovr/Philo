@@ -6,7 +6,7 @@
 /*   By: mde-maga <mde-maga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 10:42:06 by mde-maga          #+#    #+#             */
-/*   Updated: 2024/11/21 12:42:17 by mde-maga         ###   ########.fr       */
+/*   Updated: 2024/12/02 17:00:57 by mde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ int	numeric(char **argv, int i, int j)
 	return (1);
 }
 
-
-void	init_threads(t_clean *p)
+void	init(t_clean *p)
 {
 	pthread_mutex_init(&p->arg.write, NULL);
 	pthread_mutex_init(&p->arg.killed, NULL);
@@ -58,7 +57,7 @@ int	initialize(t_clean *p)
 	p->arg.start_t = time_of_day();
 	p->arg.enough = 0;
 	p->arg.n_finish = 0;
-	init_threads(p);
+	init(p);
 	while (i < p->arg.total)
 	{
 		p->ph[i].id = i + 1;

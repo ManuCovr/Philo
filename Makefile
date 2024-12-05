@@ -6,12 +6,16 @@
 #    By: mde-maga <mde-maga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/04 12:12:17 by mde-maga          #+#    #+#              #
-#    Updated: 2024/11/21 13:12:25 by mde-maga         ###   ########.fr        #
+#    Updated: 2024/12/05 15:19:12 by mde-maga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+.SILENT:
+
+
 SRCS	= main.c
-SRCS	+= ft_utils.c ft_start.c ft_error.c
+SRCS	+= ft_utils.c ft_start.c ft_threads.c \
+			ft_parser.c ft_more.c ft_plato.c
 OBJS	= $(SRCS:.c=.o)
 NAME	= philo
 CC		= clang

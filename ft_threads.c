@@ -6,7 +6,7 @@
 /*   By: mde-maga <mde-maga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 16:05:34 by mde-maga          #+#    #+#             */
-/*   Updated: 2024/11/28 12:40:36 by mde-maga         ###   ########.fr       */
+/*   Updated: 2024/12/05 15:39:32 by mde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,23 @@
 
 void *is_it_dead(void *data)
 {
-	t_philo	*ph;
+	t_philo *ph = (t_philo *)data;
 
-	ph = (t_philo *)data;
-	ft_usleep(ph->pa->rip + 1);
-	pthread_mutex_lock(&ph->pa->time_to_eat);
-	pthread_mutex_lock(&ph->pa->finish);
-	if(!check_death(ph, 0) && !ph->finish_please && \
-					((time_of_day() - ph->eat_it_up) >= (long) (ph->pa->rip)));
-	{
+	while (!check_death(ph, 0)) {
+		pthread_mutex_lock(&ph->pa->time_to_eat);
+		if (!ph->finish_please && (time_of_day() - ph->eat_it_up >= ph->pa->rip))
+		{
+			pthread_mutex_unlock(&ph->pa->time_to_eat);
+			pthread_mutex_lock(&ph->pa->write);
+			write_status("died :(\n", ph);
+			pthread_mutex_unlock(&ph->pa->write);
+			check_death(ph, 1);
+			break;
+		}
 		pthread_mutex_unlock(&ph->pa->time_to_eat);
-		pthread_mutex_unlock(&ph->pa->finish);
-		pthread_mutex_lock(&ph->pa->write);
-		write_status();
-		pthread_mutex_unlock(&ph->pa->write);
-		check_death(ph, 1);
+		ft_usleep(1);
 	}
-	pthread_mutex_unlock(&ph->pa->time_to_eat);
-	pthread_mutex_unlock(&ph->pa->finish);
-	return (NULL);
+	return NULL;
 }
 
 void *thread(void *data)
