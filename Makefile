@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mde-maga <mde-maga@student.42.fr>          +#+  +:+       +#+         #
+#    By: mde-maga <mtmpfb@gmail.com>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/04 12:12:17 by mde-maga          #+#    #+#              #
-#    Updated: 2024/12/05 15:19:12 by mde-maga         ###   ########.fr        #
+#    Updated: 2025/03/08 10:19:50 by mde-maga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,8 @@ SRCS	+= ft_utils.c ft_start.c ft_threads.c \
 			ft_parser.c ft_more.c ft_plato.c
 OBJS	= $(SRCS:.c=.o)
 NAME	= philo
-CC		= clang
-CFLAGS	= -Werror -Wall -Wextra -g -I $(HEADER) -pthread
+CC		= gcc
+CFLAGS = -Werror -Wall -Wextra -g -gdwarf-4 -pthread
 HEADER	= philo.h
 
 # Bold High Intensity

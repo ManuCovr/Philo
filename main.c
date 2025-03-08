@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mde-maga <mde-maga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mde-maga <mtmpfb@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:12:21 by mde-maga          #+#    #+#             */
-/*   Updated: 2024/12/05 15:31:22 by mde-maga         ###   ########.fr       */
+/*   Updated: 2025/03/08 11:07:44 by mde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,11 @@ void	stop(t_clean *p)
 
 	i = -1;
 	while (!check_death2(p))
-		ft_usleep(1);
+		usleep(100);
+
 	while (++i < p->arg.total)
 		pthread_join(p->ph[i].thread_id, NULL);
+
 	pthread_mutex_destroy(&p->arg.write);
 	pthread_mutex_destroy(&p->arg.killed);
 	pthread_mutex_destroy(&p->arg.time_to_eat);
@@ -47,15 +49,12 @@ void	stop(t_clean *p)
 
 	i = -1;
 	while (++i < p->arg.total)
-	{
 		pthread_mutex_destroy(&p->ph[i].l_fork);
-			if (p->ph[i].r_fork != NULL)
-				pthread_mutex_destroy(p->ph[i].r_fork);
-	}
 	if (p->arg.enough == 2)
 		printf("Nice! Each philosopher ate %d time(s) :)\n", p->arg.m_eat);
 	free(p->ph);
 }
+
 
 
 int	main (int ac, char **av)

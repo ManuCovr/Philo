@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_threads.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mde-maga <mde-maga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mde-maga <mtmpfb@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 16:05:34 by mde-maga          #+#    #+#             */
-/*   Updated: 2024/12/05 15:39:32 by mde-maga         ###   ########.fr       */
+/*   Updated: 2025/03/08 10:49:20 by mde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,32 +35,37 @@ void *is_it_dead(void *data)
 
 void *thread(void *data)
 {
-	t_philo			*ph;
+	t_philo *ph = (t_philo *)data;
 
-	ph = (t_philo *)data;
-	if(ph->id % 2 == 0)
+	if (ph->id % 2 == 0)
 		ft_usleep(ph->pa->gluttony / 10);
-	while(!check_death(ph, 0))
+
+	// Start the monitoring thread ONCE, before entering the loop
+	pthread_create(&ph->rip_id, NULL, is_it_dead, data);
+	pthread_detach(ph->rip_id);  // Only detach once!
+
+	while (!check_death(ph, 0))
 	{
-		pthread_create(&ph->rip_id, NULL, is_it_dead, data);
 		activity(ph);
-		pthread_detach(ph->rip_id);
-		if((int)++ph->n_eat == ph->pa->m_eat)
+
+		// Lock before modifying shared variables
+		pthread_mutex_lock(&ph->pa->finish);
+		if ((int)++ph->n_eat == ph->pa->m_eat)
 		{
-			pthread_mutex_lock(&ph->pa->finish);
 			ph->finish_please = 1;
 			ph->pa->n_finish++;
 			if (ph->pa->n_finish == ph->pa->total)
 			{
 				pthread_mutex_unlock(&ph->pa->finish);
 				check_death(ph, 2);
+				break;
 			}
-			pthread_mutex_unlock(&ph->pa->finish);
-			return (NULL);
 		}
+		pthread_mutex_unlock(&ph->pa->finish);
 	}
 	return (NULL);
 }
+
 
 int	threading(t_clean *p)
 {
