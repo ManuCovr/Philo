@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_more.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mde-maga <mde-maga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mde-maga <mtmpfb@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:58:00 by mde-maga          #+#    #+#             */
-/*   Updated: 2024/12/02 10:04:46 by mde-maga         ###   ########.fr       */
+/*   Updated: 2025/03/19 12:51:21 by mde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,9 @@ void	ft_putstr_fd(char *s, int fd)
 	}
 }
 
-
 int	ft_strlen(char *str)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (str[i])

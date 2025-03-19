@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_plato.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mde-maga <mde-maga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mde-maga <mtmpfb@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:03:17 by mde-maga          #+#    #+#             */
-/*   Updated: 2024/12/02 16:53:22 by mde-maga         ###   ########.fr       */
+/*   Updated: 2025/03/19 12:46:24 by mde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	write_status(char *str, t_philo *ph)
 {
-	long int		time;
+	long int	time;
 
 	time = -1;
 	time = time_of_day() - ph->pa->start_t;

@@ -6,7 +6,7 @@
 /*   By: mde-maga <mtmpfb@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:12:21 by mde-maga          #+#    #+#             */
-/*   Updated: 2025/03/08 11:07:44 by mde-maga         ###   ########.fr       */
+/*   Updated: 2025/03/19 12:42:40 by mde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,12 @@ void	stop(t_clean *p)
 	i = -1;
 	while (!check_death2(p))
 		usleep(100);
-
 	while (++i < p->arg.total)
 		pthread_join(p->ph[i].thread_id, NULL);
-
 	pthread_mutex_destroy(&p->arg.write);
 	pthread_mutex_destroy(&p->arg.killed);
 	pthread_mutex_destroy(&p->arg.time_to_eat);
 	pthread_mutex_destroy(&p->arg.finish);
-
 	i = -1;
 	while (++i < p->arg.total)
 		pthread_mutex_destroy(&p->ph[i].l_fork);
@@ -55,9 +52,7 @@ void	stop(t_clean *p)
 	free(p->ph);
 }
 
-
-
-int	main (int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_clean	p;
 

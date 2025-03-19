@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mde-maga <mde-maga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mde-maga <mtmpfb@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:41 by mde-maga          #+#    #+#             */
-/*   Updated: 2024/12/02 10:13:49 by mde-maga         ###   ########.fr       */
+/*   Updated: 2025/03/19 12:49:50 by mde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	parse_args(int argc, char **argv, t_clean *p)
 		p->arg.m_eat = -1;
 		if (argc == 6)
 			p->arg.m_eat = ph_atoi(argv[5]);
-		if (p->arg.total <= 0 || p->arg.rip <= 0 || p->arg.gluttony <= 0 \
+		if (p->arg.total <= 0 || p->arg.rip <= 0 || p->arg.gluttony <= 0
 			|| p->arg.sleep <= 0)
 			return (0);
 		return (1);

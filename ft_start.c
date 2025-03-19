@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_start.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mde-maga <mde-maga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mde-maga <mtmpfb@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 10:42:06 by mde-maga          #+#    #+#             */
-/*   Updated: 2024/12/02 17:00:57 by mde-maga         ###   ########.fr       */
+/*   Updated: 2025/03/19 12:46:43 by mde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
 
 int	ph_atoi(const char *str)
 {

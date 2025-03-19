@@ -6,49 +6,48 @@
 /*   By: mde-maga <mtmpfb@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 16:05:34 by mde-maga          #+#    #+#             */
-/*   Updated: 2025/03/08 10:49:20 by mde-maga         ###   ########.fr       */
+/*   Updated: 2025/03/19 12:45:51 by mde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void *is_it_dead(void *data)
+void	*is_it_dead(void *data)
 {
-	t_philo *ph = (t_philo *)data;
+	t_philo	*ph;
 
-	while (!check_death(ph, 0)) {
+	ph = (t_philo *)data;
+	while (!check_death(ph, 0))
+	{
 		pthread_mutex_lock(&ph->pa->time_to_eat);
-		if (!ph->finish_please && (time_of_day() - ph->eat_it_up >= ph->pa->rip))
+		if (!ph->finish_please && (time_of_day()
+				- ph->eat_it_up >= ph->pa->rip))
 		{
 			pthread_mutex_unlock(&ph->pa->time_to_eat);
 			pthread_mutex_lock(&ph->pa->write);
 			write_status("died :(\n", ph);
 			pthread_mutex_unlock(&ph->pa->write);
 			check_death(ph, 1);
-			break;
+			break ;
 		}
 		pthread_mutex_unlock(&ph->pa->time_to_eat);
 		ft_usleep(1);
 	}
-	return NULL;
+	return (NULL);
 }
 
-void *thread(void *data)
+void	*thread(void *data)
 {
-	t_philo *ph = (t_philo *)data;
+	t_philo	*ph;
 
+	ph = (t_philo *)data;
 	if (ph->id % 2 == 0)
 		ft_usleep(ph->pa->gluttony / 10);
-
-	// Start the monitoring thread ONCE, before entering the loop
 	pthread_create(&ph->rip_id, NULL, is_it_dead, data);
-	pthread_detach(ph->rip_id);  // Only detach once!
-
+	pthread_detach(ph->rip_id);
 	while (!check_death(ph, 0))
 	{
 		activity(ph);
-
-		// Lock before modifying shared variables
 		pthread_mutex_lock(&ph->pa->finish);
 		if ((int)++ph->n_eat == ph->pa->m_eat)
 		{
@@ -58,14 +57,13 @@ void *thread(void *data)
 			{
 				pthread_mutex_unlock(&ph->pa->finish);
 				check_death(ph, 2);
-				break;
+				break ;
 			}
 		}
 		pthread_mutex_unlock(&ph->pa->finish);
 	}
 	return (NULL);
 }
-
 
 int	threading(t_clean *p)
 {
@@ -76,7 +74,7 @@ int	threading(t_clean *p)
 	{
 		p->ph[i].pa = &p->arg;
 		if (pthread_create(&p->ph[i].thread_id, NULL, thread, &p->ph[i]) != 0)
-			return (ft_exit("Pthread did not return 0\n"));
+			return (ft_exit("Pthread did not return (0\n"));
 		i++;
 	}
 	return (1);
