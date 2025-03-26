@@ -6,79 +6,92 @@
 /*   By: mde-maga <mtmpfb@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:12:19 by mde-maga          #+#    #+#             */
-/*   Updated: 2025/03/19 13:12:35 by mde-maga         ###   ########.fr       */
+/*   Updated: 2025/03/26 12:22:40 by mde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include <limits.h>
-# include <pthread.h>
-# include <stdbool.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <sys/time.h>
-# include <unistd.h>
+#include <pthread.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/time.h>
+#include <stdlib.h>
 
-typedef struct s_stats
-{
-	int				total;
-	int				rip;
-	int				gluttony;
-	int				sleep;
-	int				m_eat;
-	long int		start_t;
-	pthread_mutex_t	write;
-	pthread_mutex_t	killed;
-	pthread_mutex_t	time_to_eat;
-	pthread_mutex_t	finish;
-	int				n_finish;
-	int				enough;
-}					t_stats;
+#define SIM_START "Simulation started...\n"
+
+#define SIM_END "Simulation ended...\n"
+
+#define MSG_FORK    "[%6ld]: Philosopher %d took a fork\n"
+#define MSG_EATING  "[%6ld]: Philosopher %d is eating\n"
+#define MSG_SLEEPING "[%6ld]: Philosopher %d is sleeping\n"
+#define MSG_THINKING "[%6ld]: Philosopher %d is thinking\n"
+#define MSG_DEAD    "[%6ld]  Philosopher %d DIED\n"
+
+#define MSG_EAT_COUNT "Philosopher %d ate %d times\n"
+
 
 typedef struct s_philo
+
 {
-	int				id;
-	pthread_t		thread_id;
-	pthread_t		rip_id;
-	pthread_mutex_t	*r_fork;
-	pthread_mutex_t	l_fork;
-	t_stats			*pa;
-	long int		eat_it_up;
-	unsigned int	n_eat;
-	int				finish_please;
-}					t_philo;
+	int					id;
+	pthread_t			thread;
+	pthread_mutex_t		*left_fork;
+	pthread_mutex_t		*right_fork;
+	long				last_meal_time;
+	int					meals_eaten;
+	struct s_simulation	*sim;
+}						t_philo;
 
-typedef struct s_clean
+typedef struct s_simulation
 {
-	t_philo			*ph;
-	t_stats			arg;
-}					t_clean;
+	int					num_philos;
+	int					time_to_die;
+	int					time_to_eat;
+	int					time_to_sleep;
+	int					must_eat_count;
+	int					stop;
+	long				start_time;
+	pthread_mutex_t		*forks;
+	pthread_mutex_t		print_lock;
+	t_philo				*philos;
+	pthread_mutex_t		turn_lock;
+	pthread_mutex_t		meal_check;
+	pthread_mutex_t		death_check;
+	int					turn; // 1 for odd philosophers, 2 for even philosophers
+}						t_simulation;
 
-int					main(int ac, char **av);
-int					ft_exit(char *str);
-int					check_death2(t_clean *p);
-void				stop(t_clean *p);
+// Main routine
+void					*philosopher_routine(void *arg);
+void					*monitor_routine(void *arg);
 
-int					ph_atoi(const char *str);
-void				init(t_clean *p);
-int					numeric(char **argv, int i, int j);
-int					initialize(t_clean *p);
+// Simulation
+void					handle_one_philosopher(t_philo *philo);
+void					print_action(t_simulation *sim, int id, char *action);
+void					start_simulation(t_simulation *sim);
+void					init_simul_mutex_params(t_simulation *sim, int argc,
+							char **argv);
+void					init_simulation(t_simulation *sim, int argc,
+							char **argv);
 
-int					check_death(t_philo *ph, int i);
-long int			time_of_day(void);
-void				ft_usleep(long int time_in_ms);
-int					parse_args(int argc, char **argv, t_clean *p);
+// Philo actions
+void					think(t_philo *philo);
+void					eat(t_philo *philo);
+void					sleep_philo(t_philo *philo);
+int						has_eaten_enough(t_philo *philo);
 
-int					threading(t_clean *p);
+// Util functions
+int						ft_atoi(const char *str);
+int						ft_strcmp(const char *str1, const char *str2);
+long					get_time_in_ms(void);
+void					ft_usleep(long milliseconds);
+void					wait_for_turn(t_philo *philo);
 
-void				ft_putchar_fd(char c, int fd);
-void				ft_putstr_fd(char *s, int fd);
-int					ft_strlen(char *str);
+// Checker for finalizing simulation
+void					check_deaths(t_simulation *sim);
+void					check_all_eaten(t_simulation *sim);
 
-void				activity(t_philo *ph);
-void				sleep_think(t_philo *ph);
-void				write_status(char *str, t_philo *ph);
-
+// Cleanup
+void					cleanup_simulation(t_simulation *sim);
 #endif

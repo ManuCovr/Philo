@@ -6,7 +6,7 @@
 #    By: mde-maga <mtmpfb@gmail.com>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/04 12:12:17 by mde-maga          #+#    #+#              #
-#    Updated: 2025/03/08 10:19:50 by mde-maga         ###   ########.fr        #
+#    Updated: 2025/03/26 12:17:39 by mde-maga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,12 +14,12 @@
 
 
 SRCS	= main.c
-SRCS	+= ft_utils.c ft_start.c ft_threads.c \
-			ft_parser.c ft_more.c ft_plato.c
+SRCS	+= ft_finish.c ft_initialize.c \
+			ft_philo_utils.c ft_utils.c ft_routine.c
 OBJS	= $(SRCS:.c=.o)
 NAME	= philo
-CC		= gcc
-CFLAGS = -Werror -Wall -Wextra -g -gdwarf-4 -pthread
+CC		= cc
+CFLAGS = -Werror -Wall -Wextra -g -pthread
 HEADER	= philo.h
 
 # Bold High Intensity
