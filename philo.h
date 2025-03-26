@@ -6,7 +6,7 @@
 /*   By: mde-maga <mtmpfb@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:12:19 by mde-maga          #+#    #+#             */
-/*   Updated: 2025/03/26 12:51:03 by mde-maga         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:17:32 by mde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@
 # define MSG_SLEEPING "[%6ld]: Philosopher %d is sleeping\n"
 # define MSG_THINKING "[%6ld]: Philosopher %d is thinking\n"
 # define MSG_DEAD "[%6ld]  Philosopher %d DIED\n"
-
-# define MSG_EAT_COUNT "Philosopher %d ate %d times\n"
 
 typedef struct s_philo
 {
