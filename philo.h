@@ -6,7 +6,7 @@
 /*   By: mde-maga <mtmpfb@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:12:19 by mde-maga          #+#    #+#             */
-/*   Updated: 2025/03/26 12:43:25 by mde-maga         ###   ########.fr       */
+/*   Updated: 2025/03/26 12:51:03 by mde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <limits.h>
 
 # define SIM_START "Simulation started...\n"
 

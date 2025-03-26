@@ -6,7 +6,7 @@
 /*   By: mde-maga <mtmpfb@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 12:31:54 by joafaust          #+#    #+#             */
-/*   Updated: 2025/03/26 12:40:02 by mde-maga         ###   ########.fr       */
+/*   Updated: 2025/03/26 12:52:42 by mde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,40 @@ static int	ft_strlen(char *str)
 	return (i);
 }
 
+static int	is_valid_int(char *str)
+{
+	char	*max_int;
+	int		len;
+	int		i;
+
+	max_int = "2147483647";
+	len = ft_strlen(str);
+	i = 0;
+	if (len > 10)
+		return (0);
+	if (len == 10)
+	{
+		while (str[i])
+		{
+			if (str[i] > max_int[i])
+				return (0);
+			if (str[i] < max_int[i])
+				break ;
+			i++;
+		}
+	}
+	return (1);
+}
+
 static int	numeric(char **argv, int i, int j)
 {
 	while (argv[j])
 	{
+		if (!is_valid_int(argv[j]))
+			return (0);
 		while (argv[j][i])
 		{
-			if (argv[j][i] < '0' || argv[j][i] > '9' || ft_strlen(argv[j]) > 10)
+			if (argv[j][i] < '0' || argv[j][i] > '9')
 				return (0);
 			i++;
 		}
