@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   end_check_sim.c                                    :+:      :+:    :+:   */
+/*   ft_finish.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mde-maga <mtmpfb@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 00:21:55 by joafaust          #+#    #+#             */
-/*   Updated: 2025/03/26 12:01:07 by mde-maga         ###   ########.fr       */
+/*   Updated: 2025/03/26 12:42:29 by mde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	check_all_eaten(t_simulation *sim)
 			finished_philos++;
 		i++;
 	}
-	// If all philosophers have eaten enough, stop the simulation
 	if (finished_philos == sim->num_philos)
 		sim->stop = 1;
 }

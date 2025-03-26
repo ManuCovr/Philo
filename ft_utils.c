@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mde-maga <mtmpfb@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:52:35 by joafaust          #+#    #+#             */
-/*   Updated: 2025/03/26 12:00:59 by mde-maga         ###   ########.fr       */
+/*   Updated: 2025/03/26 12:42:37 by mde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,5 @@ void	ft_usleep(long milliseconds)
 
 	start_time = get_time_in_ms();
 	while ((get_time_in_ms() - start_time) < milliseconds)
-		usleep(10); // Small sleep to avoid busy-waiting
+		usleep(10);
 }

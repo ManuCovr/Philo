@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   ft_initialize.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mde-maga <mtmpfb@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 12:31:38 by joafaust          #+#    #+#             */
-/*   Updated: 2025/03/26 12:00:59 by mde-maga         ###   ########.fr       */
+/*   Updated: 2025/03/26 12:42:11 by mde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,8 @@ void	init_simul_mutex_params(t_simulation *sim, int argc, char **argv)
 	pthread_mutex_init(&sim->meal_check, NULL);
 	pthread_mutex_init(&sim->death_check, NULL);
 	pthread_mutex_init(&sim->print_lock, NULL);
-	pthread_mutex_init(&sim->turn_lock, NULL); // Initialize turn mutex
+	pthread_mutex_init(&sim->turn_lock, NULL);
 	sim->turn = 1;
-	// Initialize fork mutexes
 	while (i < sim->num_philos)
 	{
 		pthread_mutex_init(&sim->forks[i], NULL);
@@ -68,9 +67,7 @@ void	init_simulation(t_simulation *sim, int argc, char **argv)
 {
 	int	i;
 
-	// Initialize simulation parameters, mutexes, and forks
 	init_simul_mutex_params(sim, argc, argv);
-	// Initialize philosophers
 	i = 0;
 	while (i < sim->num_philos)
 	{

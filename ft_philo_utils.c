@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_utils.c                                      :+:      :+:    :+:   */
+/*   ft_philo_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mde-maga <mtmpfb@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 14:40:51 by joafaust          #+#    #+#             */
-/*   Updated: 2025/03/26 12:00:59 by mde-maga         ###   ########.fr       */
+/*   Updated: 2025/03/26 12:42:55 by mde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ void	think(t_philo *philo)
 
 void	eat(t_philo *philo)
 {
-	if (philo->id % 2 == 0) // even philosopher
+	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(philo->left_fork);
 		print_action(philo->sim, philo->id, "has taken a fork");
 		pthread_mutex_lock(philo->right_fork);
 	}
-	else // odd philosopher
+	else
 	{
 		pthread_mutex_lock(philo->right_fork);
 		print_action(philo->sim, philo->id, "has taken a fork");
@@ -55,10 +55,10 @@ int	has_eaten_enough(t_philo *philo)
 	pthread_mutex_lock(&philo->sim->meal_check);
 	if (philo->sim->must_eat_count > 0
 		&& philo->meals_eaten >= philo->sim->must_eat_count)
-		{
-			pthread_mutex_unlock(&philo->sim->meal_check);
-			return (1);
-		}
+	{
+		pthread_mutex_unlock(&philo->sim->meal_check);
+		return (1);
+	}
 	pthread_mutex_unlock(&philo->sim->meal_check);
 	return (0);
 }

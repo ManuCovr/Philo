@@ -6,34 +6,32 @@
 /*   By: mde-maga <mtmpfb@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:12:19 by mde-maga          #+#    #+#             */
-/*   Updated: 2025/03/26 12:22:40 by mde-maga         ###   ########.fr       */
+/*   Updated: 2025/03/26 12:43:25 by mde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-#include <pthread.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <sys/time.h>
-#include <stdlib.h>
+# include <pthread.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <sys/time.h>
+# include <unistd.h>
 
-#define SIM_START "Simulation started...\n"
+# define SIM_START "Simulation started...\n"
 
-#define SIM_END "Simulation ended...\n"
+# define SIM_END "Simulation ended...\n"
 
-#define MSG_FORK    "[%6ld]: Philosopher %d took a fork\n"
-#define MSG_EATING  "[%6ld]: Philosopher %d is eating\n"
-#define MSG_SLEEPING "[%6ld]: Philosopher %d is sleeping\n"
-#define MSG_THINKING "[%6ld]: Philosopher %d is thinking\n"
-#define MSG_DEAD    "[%6ld]  Philosopher %d DIED\n"
+# define MSG_FORK "[%6ld]: Philosopher %d took a fork\n"
+# define MSG_EATING "[%6ld]: Philosopher %d is eating\n"
+# define MSG_SLEEPING "[%6ld]: Philosopher %d is sleeping\n"
+# define MSG_THINKING "[%6ld]: Philosopher %d is thinking\n"
+# define MSG_DEAD "[%6ld]  Philosopher %d DIED\n"
 
-#define MSG_EAT_COUNT "Philosopher %d ate %d times\n"
-
+# define MSG_EAT_COUNT "Philosopher %d ate %d times\n"
 
 typedef struct s_philo
-
 {
 	int					id;
 	pthread_t			thread;
@@ -59,7 +57,7 @@ typedef struct s_simulation
 	pthread_mutex_t		turn_lock;
 	pthread_mutex_t		meal_check;
 	pthread_mutex_t		death_check;
-	int					turn; // 1 for odd philosophers, 2 for even philosophers
+	int					turn;
 }						t_simulation;
 
 // Main routine
