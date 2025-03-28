@@ -3,24 +3,30 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mde-maga <mtmpfb@gmail.com>                +#+  +:+       +#+         #
+#    By: mde-maga <mde-maga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/11/04 12:12:17 by mde-maga          #+#    #+#              #
-#    Updated: 2025/03/26 16:29:37 by mde-maga         ###   ########.fr        #
+#    Created: 2025/03/28 16:30:39 by mde-maga          #+#    #+#              #
+#    Updated: 2025/03/28 17:28:03 by mde-maga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-.SILENT:
+NAME = philo
 
+SRC_DIR = src
+SRC = $(SRC_DIR)/main.c \
+		$(SRC_DIR)/parser.c \
+		$(SRC_DIR)/utils.c \
+		$(SRC_DIR)/mutex_init.c \
+		$(SRC_DIR)/routine.c \
+		$(SRC_DIR)/monitor.c \
+		$(SRC_DIR)/fork_picker.c \
+		$(SRC_DIR)/extra_utils.c
 
-SRCS	= main.c
-SRCS	+= ft_finish.c ft_initialize.c \
-			ft_philo_utils.c ft_utils.c ft_routine.c
-OBJS	= $(SRCS:.c=.o)
-NAME	= philo
-CC		= cc
-CFLAGS = -Werror -Wall -Wextra -g -pthread
-HEADER	= philo.h
+CC = @cc
+CFLAGS = -Wall -Wextra -Werror -g -pthread #-fsanitize=thread
+
+OBJ_DIR = obj
+OBJS = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # Bold High Intensity
 BIBlack='\033[1;90m'      # Black
@@ -35,18 +41,24 @@ BILGreen='\033[1;38;2;147;196;125m'  # Bold Custom Color (#93c47d)
 
 MSG1 = @echo ${BILGreen}"✔︎ Compiled successfully"${Color_Off}
 MSG2 = @echo ${BILGreen}"✔︎ Cleaned successfully"${Color_Off}
-MSG3 = @echo ${BILGreen}"✔︎ Cleaned ${NAME} executable successfully"${Color_Off}
+MSG3 = @echo ${BILGreen}"✔︎ Cleaned ./${NAME} executable successfully"${Color_Off}
 HOWTO = @echo ${BIGreen}"To run the program write:"${BIWhite}"./${NAME} X X X X (X)"${Color_Off}
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(HEADER)
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+$(NAME): $(OBJS)
+	@$(CC) $(CFLAGS) -o $@ $^
 	$(MSG1)
 	${HOWTO}
 
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c -o $@ $<
+
 clean:
-	@/bin/rm -rf $(OBJS)
+	@rm -rf $(OBJS) $(NAME)
 	$(MSG2)
 
 fclean: clean

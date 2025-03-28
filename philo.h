@@ -3,92 +3,79 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mde-maga <mtmpfb@gmail.com>                +#+  +:+       +#+        */
+/*   By: mde-maga <mde-maga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 12:12:19 by mde-maga          #+#    #+#             */
-/*   Updated: 2025/03/26 16:17:32 by mde-maga         ###   ########.fr       */
+/*   Created: 2025/03/28 17:18:30 by mde-maga          #+#    #+#             */
+/*   Updated: 2025/03/28 17:27:45 by mde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+/* ========================== HEADER FILES ========================== */
 # include <pthread.h>
 # include <stdio.h>
-# include <stdlib.h>
-# include <sys/time.h>
 # include <unistd.h>
+# include <stdlib.h>
+# include <string.h>
 # include <limits.h>
+# include <time.h>
+# include <sys/time.h>
 
-# define SIM_START "Simulation started...\n"
+/* ========================== STRUCTS ========================== */
+typedef struct s_philosopher	t_philosopher;
+typedef struct s_table			t_table;
 
-# define SIM_END "Simulation ended...\n"
-
-# define MSG_FORK "[%6ld]: Philosopher %d took a fork\n"
-# define MSG_EATING "[%6ld]: Philosopher %d is eating\n"
-# define MSG_SLEEPING "[%6ld]: Philosopher %d is sleeping\n"
-# define MSG_THINKING "[%6ld]: Philosopher %d is thinking\n"
-# define MSG_DEAD "[%6ld]  Philosopher %d DIED\n"
-
-typedef struct s_philo
+typedef struct s_philosopher
 {
-	int					id;
-	pthread_t			thread;
-	pthread_mutex_t		*left_fork;
-	pthread_mutex_t		*right_fork;
-	long				last_meal_time;
-	int					meals_eaten;
-	struct s_simulation	*sim;
-}						t_philo;
+	int				id;
+	int				meal_count;
+	unsigned int	last_meal_time;
+	pthread_mutex_t	eating_mutex;
+	pthread_mutex_t	writing_mutex;
+	t_table			*table;
+}				t_philosopher;
 
-typedef struct s_simulation
+typedef struct s_table
 {
-	int					num_philos;
-	int					time_to_die;
-	int					time_to_eat;
-	int					time_to_sleep;
-	int					must_eat_count;
-	int					stop;
-	long				start_time;
-	pthread_mutex_t		*forks;
-	pthread_mutex_t		print_lock;
-	t_philo				*philos;
-	pthread_mutex_t		turn_lock;
-	pthread_mutex_t		meal_check;
-	pthread_mutex_t		death_check;
-	int					turn;
-}						t_simulation;
+	pthread_t		*threads;
+	pthread_t		monitor;
+	int				dead;
+	int				philosopher_count;
+	int				full_count;
+	unsigned int	time_to_die;
+	unsigned int	time_to_eat;
+	unsigned int	time_to_sleep;
+	int				required_meals;
+	unsigned int	start_time;
+	pthread_mutex_t	table_mutex;
+	pthread_mutex_t	*forks;
+	t_philosopher	*philosophers;
+}			t_table;
 
-// Main routine
-void					*philosopher_routine(void *arg);
-void					*monitor_routine(void *arg);
+/* ========================== FUNCTION PROTOTYPES ========================== */
+/* --------------------- MAIN & ARGUMENT HANDLING --------------------- */
+int				main(int ac, char **av);
+long			string_to_long(const char *s);
+int				is_invalid_arg(char *str);
+int				parse_args(char **av);
+void			save_args(t_table *table, char **av);
 
-// Simulation
-void					handle_one_philosopher(t_philo *philo);
-void					print_action(t_simulation *sim, int id, char *action);
-void					start_simulation(t_simulation *sim);
-void					init_simul_mutex_params(t_simulation *sim, int argc,
-							char **argv);
-void					init_simulation(t_simulation *sim, int argc,
-							char **argv);
+/* --------------------- MEMORY, TIME & INITIALIZATION --------------------- */
+unsigned int	current_time(void);
+void			*ft_calloc(size_t nmemb, size_t size);
+int				init_mutexes(t_table *table);
+int				init(t_table *table);
 
-// Philo actions
-void					think(t_philo *philo);
-void					eat(t_philo *philo);
-void					sleep_philo(t_philo *philo);
-int						has_eaten_enough(t_philo *philo);
+/* --------------------- THREAD ROUTINES & ACTIONS --------------------- */
+void			*philo_life(void *arg);
+void			*monitor_death(void *arg);
+void			print_status(t_philosopher *philosophers, int id, char *status);
+void			ft_usleep(int start_time, t_table *table);
+int				odd_fork(t_table *table, int num);
+int				even_fork(t_table *table, int num);
+int				check_life(t_table *table);
+int				forking(t_table *ph, int num);
 
-// Util functions
-int						ft_atoi(const char *str);
-int						ft_strcmp(const char *str1, const char *str2);
-long					get_time_in_ms(void);
-void					ft_usleep(long milliseconds);
-void					wait_for_turn(t_philo *philo);
-
-// Checker for finalizing simulation
-void					check_deaths(t_simulation *sim);
-void					check_all_eaten(t_simulation *sim);
-
-// Cleanup
-void					cleanup_simulation(t_simulation *sim);
 #endif
